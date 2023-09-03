@@ -3,7 +3,12 @@
     <h1>我是App根目录文件</h1>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+for(let i=0;i<100;i++)
+{
+  console.log(i)
+}
+</script>
 
 <style scoped lang="scss">
 .box {
