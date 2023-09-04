@@ -1,22 +1,13 @@
 <template>
-  <div class="box">
-    <h1>我是App根目录文件</h1>
-    <h1>新增一个标题</h1>
+  <div>
+    <router-view></router-view>
   </div>
 </template>
 <script setup lang="ts">
-for (let i = 0; i < 100; i++) {
-  console.log(i)
-}
+import { onMounted } from 'vue'
+import { reqLogin } from '@/api/user'
+onMounted(() => {
+  reqLogin({ username: 'admin', password: '111111' })
+})
 </script>
-
-<style scoped lang="scss">
-.box {
-  width: 600px;
-  height: 400px;
-  background-color: black;
-  h1 {
-    color: white;
-  }
-}
-</style>
+<style scoped lang="scss"></style>
