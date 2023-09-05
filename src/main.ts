@@ -11,6 +11,7 @@ import gloalComponent from '@/components'
 import '@/styles/index.scss'
 import router from '@/router'
 import pinia from '@/store'
+import './permisstion.ts'
 
 //获取应用实例对象
 const app = createApp(App)

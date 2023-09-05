@@ -1,11 +1,17 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import useUserStore from '@/store/modules/user.ts'
 let request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 5000,
 })
 request.interceptors.request.use((config) => {
   // config.headers.token='123'
+  let userStore = useUserStore()
+  // console.log(userStore.token)
+  if (userStore.token) {
+    config.headers.token = userStore.token
+  }
   return config
 })
 

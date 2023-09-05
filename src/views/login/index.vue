@@ -45,13 +45,14 @@
 import { User, Lock } from '@element-plus/icons-vue'
 import { reactive, ref } from 'vue'
 import useUserStore from '@/store/modules/user.ts'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import { getTime } from '@/utils/time.ts'
 
 let useStore = useUserStore()
-let loginForm = reactive({ username: 'admin', password: '111111' })
+let loginForm = reactive({ username: 'admin', password: 'atguigu123' })
 let $router = useRouter()
+let $route = useRoute()
 let loading = ref(false)
 let loginForms = ref()
 const login = async () => {
@@ -59,7 +60,8 @@ const login = async () => {
   loading.value = true
   try {
     await useStore.userLogin(loginForm)
-    $router.push('/')
+    let redirect: any = $route.query.redirect
+    $router.push({ path: redirect || '/' })
     ElNotification({
       type: 'success',
       message: '欢迎回来',
@@ -76,14 +78,14 @@ const login = async () => {
 }
 const validatorUserName = (rule: any, value: any, callback: any) => {
   if (value.length >= 5) {
-    callback
+    callback()
   } else {
     callback(new Error('账号长度至少5位'))
   }
 }
 const validatorPassword = (rule: any, value: any, callback: any) => {
   if (value.length >= 6) {
-    callback
+    callback()
   } else {
     callback(new Error('账号长度至少6位'))
   }
