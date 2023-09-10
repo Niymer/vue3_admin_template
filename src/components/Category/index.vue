@@ -26,7 +26,11 @@ defineProps(['scene'])
   <el-card>
     <el-form :inline="true">
       <el-form-item label="一级分类">
-        <el-select v-model="categoryStore.c1Id" :disabled="scene==0?false:true" @change="handler">
+        <el-select
+          v-model="categoryStore.c1Id"
+          :disabled="scene == 0 ? false : true"
+          @change="handler"
+        >
           <el-option
             v-for="(c1, index) of categoryStore.c1Arr"
             :key="c1.id"
@@ -36,7 +40,11 @@ defineProps(['scene'])
         </el-select>
       </el-form-item>
       <el-form-item label="二级分类">
-        <el-select v-model="categoryStore.c2Id" :disabled="scene==0?false:true" @change="handler1">
+        <el-select
+          v-model="categoryStore.c2Id"
+          :disabled="scene == 0 ? false : true"
+          @change="handler1"
+        >
           <el-option
             v-for="(c2, index) of categoryStore.c2Arr"
             :key="c2.id"
@@ -46,7 +54,10 @@ defineProps(['scene'])
         </el-select>
       </el-form-item>
       <el-form-item label="三级分类">
-        <el-select v-model="categoryStore.c3Id" :disabled="scene==0?false:true">
+        <el-select
+          v-model="categoryStore.c3Id"
+          :disabled="scene == 0 ? false : true"
+        >
           <el-option
             v-for="(c3, index) of categoryStore.c3Arr"
             :key="c3.id"
