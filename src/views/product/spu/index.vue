@@ -40,14 +40,21 @@ const sizeChange = () => {
 }
 const addSpu = () => {
   scene.value = 1
+  spu.value.initAddSpu(categoryStore.c3Id)
 }
 const updateSpu = (row: SpuData) => {
   scene.value = 1
   // console.log(spu.value)
   spu.value.initHasSpuData(row)
 }
-const changeScene = (num: number) => {
-  scene.value = num
+const changeScene = (obj:any) => {
+  console.log(obj)
+  scene.value = obj.flag
+  if(obj.params=='update'){
+    getHasSpu(pageNo.value)
+  }else {
+    getHasSpu()
+  }
 }
 </script>
 
