@@ -40,8 +40,8 @@ export interface SpuImg {
   spuId?: number
   imgName?: string
   imgUrl?: string
-  name?:string
-  url?:string
+  name?: string
+  url?: string
 }
 export interface SpuHasImg extends ResponseData {
   data: SpuImg[]
@@ -52,7 +52,7 @@ export interface SaleAttrValue {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number|string
+  baseSaleAttrId: number | string
   saleAttrvalueName: string
   saleAttrName?: string
   isChecked?: null
@@ -63,11 +63,11 @@ export interface SaleAttr {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number|string
+  baseSaleAttrId: number | string
   saleAttrName: string
   spuSaleAttrValueList: spuSaleAttrValueList
-  flag?:boolean
-  saleAttrValue?:string
+  flag?: boolean
+  saleAttrValue?: string
 }
 export interface SaleAttrResponseData extends ResponseData {
   data: SaleAttr[]
@@ -79,4 +79,29 @@ export interface HasSaleAttr {
 }
 export interface HasSaleAttrResponseData extends ResponseData {
   data: HasSaleAttr[]
+}
+
+export interface Attr{
+  attrId:number|string,
+  valueId:number|string,
+}
+export interface  SaleAttr{
+  saleAttrId:string|number,
+  saleAttrValueId:string|number
+}
+export interface SkuData{
+  category3Id:string|number,
+  spuId:string|number,
+  tmId:string|number,
+  skuName:string,
+  price:string|number,
+  weight:string|number,
+  skuDesc:string,
+  skuAttrValueList?:Attr[],
+  skuSaleAttrValueList?:SaleAttr[],
+  skuDefaultImg:string,
+}
+
+export interface SkuInfoData extends ResponseData{
+  data:SkuData[]
 }

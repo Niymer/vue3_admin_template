@@ -5,8 +5,9 @@ import type {
   SpuHasImg,
   SaleAttrResponseData,
   HasSaleAttrResponseData,
-  SpuData,
+  SpuData, SkuData, SkuInfoData,
 } from '@/api/product/spu/type.ts'
+
 
 enum API {
   HASSPU_URL = '/admin/product/',
@@ -16,6 +17,9 @@ enum API {
   ALLSALEATTR_URL = '/admin/product/baseSaleAttrList',
   ADDSPU_URL = '/admin/product/saveSpuInfo',
   UPDATESPU_URL = '/admin/product/updateSpuInfo',
+  ADDSKU_URL='/admin/product/saveSkuInfo',
+  SKUINFO_URL='/admin/product/findBySpuId/',
+  REMOVESPU_URL='/admin/product/deleteSpu/'
 }
 
 export const reqHasSpu = (
@@ -43,3 +47,8 @@ export const reqAddOrUpdateSpu = (data: SpuData) => {
     return request.post<any, any>(API.ADDSPU_URL, data)
   }
 }
+export const reqAddSku=(data:SkuData)=>request.post<any,any>(API.ADDSKU_URL,data)
+
+export const reqSkuList=(spuId:number|string)=>request.get<any,SkuInfoData>(API.SKUINFO_URL+spuId)
+
+export const reqRemoveSpu=(spuId:number|string)=>request.delete<any,any>(API.REMOVESPU_URL+spuId)
