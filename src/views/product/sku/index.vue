@@ -39,19 +39,18 @@ const updateSale = async (row: SkuData) => {
   //否则else情况与上面情况相反
   if (row.isSale == 1) {
     //下架操作
-    await reqCancelSale((row.id as number));
+    await reqCancelSale(row.id as number)
     //提示信息
-    ElMessage({ type: 'success', message: '下架成功' });
+    ElMessage({ type: 'success', message: '下架成功' })
     //发请求获取当前更新完毕的全部已有的SKU
-    getHasSku(pageNo.value);
-
+    getHasSku(pageNo.value)
   } else {
     //下架操作
-    await reqSaleSku((row.id as number));
+    await reqSaleSku(row.id as number)
     //提示信息
-    ElMessage({ type: 'success', message: '上架成功' });
+    ElMessage({ type: 'success', message: '上架成功' })
     //发请求获取当前更新完毕的全部已有的SKU
-    getHasSku(pageNo.value);
+    getHasSku(pageNo.value)
   }
 }
 const updateSku = () => {
