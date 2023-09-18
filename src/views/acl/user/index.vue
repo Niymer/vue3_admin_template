@@ -2,7 +2,9 @@
 import { nextTick, onMounted, reactive, ref } from 'vue'
 import {
   reqAddOrUpdateUser,
-  reqAllRole, reqRemoveSelectUser, reqRemoveUser,
+  reqAllRole,
+  reqRemoveSelectUser,
+  reqRemoveUser,
   reqSetUserRole,
   reqUserInfo,
 } from '@/api/acl/user'
@@ -14,7 +16,7 @@ import {
   UserResponseData,
 } from '@/api/acl/user/type.ts'
 import { ElMessage } from 'element-plus'
-import useLayOutSettingStore from "@/store/modules/setting.ts";
+import useLayOutSettingStore from '@/store/modules/setting.ts'
 
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(5)
@@ -32,12 +34,16 @@ let checkAll = ref<boolean>(false)
 let isIndeterminate = ref<boolean>(true)
 let allRole = ref<AllRole>([])
 let userRole = ref<AllRole>([])
-let selectIdArr=ref<User[]>([])
-let keyword=ref<string>('')
-let settingStore=useLayOutSettingStore()
+let selectIdArr = ref<User[]>([])
+let keyword = ref<string>('')
+let settingStore = useLayOutSettingStore()
 const getHasUser = async (page = 1) => {
   pageNo.value = page
-  let result: UserResponseData = await reqUserInfo(pageNo.value, pageSize.value,keyword.value)
+  let result: UserResponseData = await reqUserInfo(
+    pageNo.value,
+    pageSize.value,
+    keyword.value,
+  )
   if (result.code == 200) {
     total.value = result.data.total
     userArr.value = result.data.records
@@ -156,32 +162,32 @@ const confirmClick = async () => {
     getHasUser(pageNo.value)
   }
 }
-const removeUser =async (userId:number) => {
-  let result=  await reqRemoveUser(userId)
-  if(result.code==200){
-    ElMessage({type:"success",message:'删除成功'})
-    getHasUser(userArr.value.length>1?pageNo.value:pageNo.value-1)
+const removeUser = async (userId: number) => {
+  let result = await reqRemoveUser(userId)
+  if (result.code == 200) {
+    ElMessage({ type: 'success', message: '删除成功' })
+    getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
   }
 }
-const selectChange = (value:any) => {
-  selectIdArr.value=value
+const selectChange = (value: any) => {
+  selectIdArr.value = value
 }
 const removeSelectUser = async () => {
-  let idList:any=selectIdArr.value.map(item=>{
+  let idList: any = selectIdArr.value.map((item) => {
     return item.id
   })
-  let result:any=await reqRemoveSelectUser(idList)
-  if(result.code==200){
-    ElMessage({type:"success",message:'删除成功'})
-    getHasUser(userArr.value.length>1?pageNo.value:pageNo.value-1)
+  let result: any = await reqRemoveSelectUser(idList)
+  if (result.code == 200) {
+    ElMessage({ type: 'success', message: '删除成功' })
+    getHasUser(userArr.value.length > 1 ? pageNo.value : pageNo.value - 1)
   }
 }
 const search = () => {
   getHasUser()
-  keyword.value=''
+  keyword.value = ''
 }
 const reset = () => {
-  settingStore.refsh=!settingStore.refsh
+  settingStore.refsh = !settingStore.refsh
 }
 </script>
 
@@ -189,10 +195,17 @@ const reset = () => {
   <el-card style="height: 80px">
     <el-form :inline="true" class="form">
       <el-form-item label="用户名：">
-        <el-input placeholder="请输入用户名"  v-model="keyword"></el-input>
+        <el-input placeholder="请输入用户名" v-model="keyword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" size="default" :disabled="keyword?false:true" @click="search">搜索</el-button>
+        <el-button
+          type="primary"
+          size="default"
+          :disabled="keyword ? false : true"
+          @click="search"
+        >
+          搜索
+        </el-button>
         <el-button type="success" size="default" @click="reset">重置</el-button>
       </el-form-item>
     </el-form>
@@ -201,8 +214,20 @@ const reset = () => {
     <el-button type="primary" size="default" @click="addUser">
       添加用户
     </el-button>
-    <el-button type="danger" size="default" :disabled="selectIdArr.length?false:true" @click="removeSelectUser">批量删除</el-button>
-    <el-table border style="margin: 10px 0" :data="userArr" @selection-change="selectChange">
+    <el-button
+      type="danger"
+      size="default"
+      :disabled="selectIdArr.length ? false : true"
+      @click="removeSelectUser"
+    >
+      批量删除
+    </el-button>
+    <el-table
+      border
+      style="margin: 10px 0"
+      :data="userArr"
+      @selection-change="selectChange"
+    >
       <el-table-column type="selection"></el-table-column>
       <el-table-column label="#" align="center" type="index"></el-table-column>
       <el-table-column label="ID" align="center" prop="id"></el-table-column>
@@ -254,9 +279,15 @@ const reset = () => {
           >
             编辑
           </el-button>
-          <el-popconfirm :title="`你确定要删除${row.username}吗？`" width="260px" @confirm="removeUser(row.id)">
+          <el-popconfirm
+            :title="`你确定要删除${row.username}吗？`"
+            width="260px"
+            @confirm="removeUser(row.id)"
+          >
             <template #reference>
-              <el-button type="primary" size="small" icon="Delete">删除</el-button>
+              <el-button type="primary" size="small" icon="Delete">
+                删除
+              </el-button>
             </template>
           </el-popconfirm>
         </template>
