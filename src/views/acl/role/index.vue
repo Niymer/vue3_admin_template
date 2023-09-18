@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import {nextTick, onMounted, reactive, ref} from 'vue'
-import {reqAddOrUpdateRole, reqAllMenuList, reqAllRoleList, reqRemoveRole, reqSetPermission} from '@/api/acl/role'
-import {MenuList, MenuResponseData, Records, RoleData, RoleResponseData} from '@/api/acl/role/type.ts'
+import { nextTick, onMounted, reactive, ref } from 'vue'
+import {
+  reqAddOrUpdateRole,
+  reqAllMenuList,
+  reqAllRoleList,
+  reqRemoveRole,
+  reqSetPermission,
+} from '@/api/acl/role'
+import {
+  MenuList,
+  MenuResponseData,
+  Records,
+  RoleData,
+  RoleResponseData,
+} from '@/api/acl/role/type.ts'
 import useLayOutSettingStore from '@/store/modules/setting.ts'
-import {ElMessage} from "element-plus";
+import { ElMessage } from 'element-plus'
 
 let pageNo = ref<number>(1)
 let pageSize = ref<number>(10)
@@ -11,15 +23,15 @@ let keyword = ref<string>('')
 let allRole = ref<Records>([])
 let total = ref<number>(0)
 let settingStore = useLayOutSettingStore()
-let dialogVisible=ref<boolean>(false)
-let roleParams=reactive<RoleData>({
-  roleName:''
+let dialogVisible = ref<boolean>(false)
+let roleParams = reactive<RoleData>({
+  roleName: '',
 })
-let form=ref<any>()
-let drawer=ref<boolean>(false)
-let menuArr=ref<MenuList>([])
-let selectArr=ref<number[]>([])
-let tree=ref<any>()
+let form = ref<any>()
+let drawer = ref<boolean>(false)
+let menuArr = ref<MenuList>([])
+let selectArr = ref<number[]>([])
+let tree = ref<any>()
 onMounted(() => {
   getHasRole()
 })
@@ -46,82 +58,85 @@ const reset = () => {
   settingStore.refsh = !settingStore.refsh
 }
 const addRole = () => {
-  dialogVisible.value=true
-  Object.assign(roleParams,{
-    roleName:'',
-    id:0
+  dialogVisible.value = true
+  Object.assign(roleParams, {
+    roleName: '',
+    id: 0,
   })
-  nextTick(()=>{
+  nextTick(() => {
     form.value.clearValidate('roleName')
   })
 }
-const updateRole = (row:RoleData) => {
-  dialogVisible.value=true
-  Object.assign(roleParams,row)
-  nextTick(()=>{
+const updateRole = (row: RoleData) => {
+  dialogVisible.value = true
+  Object.assign(roleParams, row)
+  nextTick(() => {
     form.value.clearValidate('roleName')
   })
 }
-const validatorRoleName = (rule:any,value:any,callBack:any) => {
-  if(value.trim().length>=2){
+const validatorRoleName = (rule: any, value: any, callBack: any) => {
+  if (value.trim().length >= 2) {
     callBack()
-  }else {
+  } else {
     callBack(new Error('职位名称至少两位'))
   }
 }
-const rules={
-  roleName:[{required:true,trigger:'blur',validator:validatorRoleName}]
+const rules = {
+  roleName: [{ required: true, trigger: 'blur', validator: validatorRoleName }],
 }
-const save =async () => {
+const save = async () => {
   await form.value.validate()
-  let result:any=await reqAddOrUpdateRole(roleParams)
-  if(result.code==200){
-    ElMessage({type:"success",message:roleParams.id?'更新成功':'添加成功'})
-    dialogVisible.value=false
-    getHasRole(roleParams.id?pageNo.value:1)
+  let result: any = await reqAddOrUpdateRole(roleParams)
+  if (result.code == 200) {
+    ElMessage({
+      type: 'success',
+      message: roleParams.id ? '更新成功' : '添加成功',
+    })
+    dialogVisible.value = false
+    getHasRole(roleParams.id ? pageNo.value : 1)
   }
 }
-const setPermission = async (row:RoleData) => {
-  drawer.value=true
-  Object.assign(roleParams,row)
-  let result:MenuResponseData=await reqAllMenuList(roleParams.id as number)
-  if (result.code==200){
-    menuArr.value=result.data
-    selectArr.value= filterSelectArr(menuArr.value,[])
+const setPermission = async (row: RoleData) => {
+  drawer.value = true
+  Object.assign(roleParams, row)
+  let result: MenuResponseData = await reqAllMenuList(roleParams.id as number)
+  if (result.code == 200) {
+    menuArr.value = result.data
+    selectArr.value = filterSelectArr(menuArr.value, [])
   }
 }
 const defaultProps = {
   children: 'children',
   label: 'name',
 }
-const filterSelectArr = (allDate:any,initArr:any) => {
-  allDate.forEach((item:any)=>{
-    if(item.select&&item.level==4){
+const filterSelectArr = (allDate: any, initArr: any) => {
+  allDate.forEach((item: any) => {
+    if (item.select && item.level == 4) {
       initArr.push(item.id)
     }
-    if(item.children&&item.children.length>0){
-      filterSelectArr(item.children,initArr)
+    if (item.children && item.children.length > 0) {
+      filterSelectArr(item.children, initArr)
     }
   })
   return initArr
 }
 const handler = async () => {
-  const roleId= (roleParams.id as number)
-  let arr1=tree.value.getCheckedKeys()
-  let arr2=tree.value.getHalfCheckedKeys()
-  let permissionId=arr1.concat(arr2)
-  let result:any=await reqSetPermission(roleId,permissionId)
-  if(result.code==200){
-    drawer.value=false
-    ElMessage({type:"success",message:'分配权限成功'})
+  const roleId = roleParams.id as number
+  let arr1 = tree.value.getCheckedKeys()
+  let arr2 = tree.value.getHalfCheckedKeys()
+  let permissionId = arr1.concat(arr2)
+  let result: any = await reqSetPermission(roleId, permissionId)
+  if (result.code == 200) {
+    drawer.value = false
+    ElMessage({ type: 'success', message: '分配权限成功' })
     window.location.reload()
   }
 }
-const removeRole =async (id:number) => {
-  let result:any=await reqRemoveRole(id)
-  if(result.code==200){
-    ElMessage({type:"success",message:'删除成功'})
-    getHasRole(allRole.value.length>1?pageNo.value:pageNo.value-1)
+const removeRole = async (id: number) => {
+  let result: any = await reqRemoveRole(id)
+  if (result.code == 200) {
+    ElMessage({ type: 'success', message: '删除成功' })
+    getHasRole(allRole.value.length > 1 ? pageNo.value : pageNo.value - 1)
   }
 }
 </script>
@@ -151,7 +166,9 @@ const removeRole =async (id:number) => {
   </el-card>
 
   <el-card style="margin: 10px 0">
-    <el-button type="primary" size="default" icon="Plus" @click="addRole">添加职位</el-button>
+    <el-button type="primary" size="default" icon="Plus" @click="addRole">
+      添加职位
+    </el-button>
     <el-table border style="margin: 10px 0" :data="allRole">
       <el-table-column
         type="index"
@@ -188,13 +205,31 @@ const removeRole =async (id:number) => {
       ></el-table-column>
       <el-table-column align="center" label="操作">
         <template #="{ row, $index }">
-          <el-button type="primary" size="small" icon="User" @click="setPermission(row)">
+          <el-button
+            type="primary"
+            size="small"
+            icon="User"
+            @click="setPermission(row)"
+          >
             分配权限
           </el-button>
-          <el-button type="primary" size="small" icon="Edit" @click="updateRole(row)">编辑</el-button>
-          <el-popconfirm :title="`你确定要删除${row.roleName}职位吗?`" width="250px" @confirm="removeRole(row.id)">
+          <el-button
+            type="primary"
+            size="small"
+            icon="Edit"
+            @click="updateRole(row)"
+          >
+            编辑
+          </el-button>
+          <el-popconfirm
+            :title="`你确定要删除${row.roleName}职位吗?`"
+            width="250px"
+            @confirm="removeRole(row.id)"
+          >
             <template #reference>
-              <el-button type="primary" size="small" icon="Delete">删除</el-button>
+              <el-button type="primary" size="small" icon="Delete">
+                删除
+              </el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -213,14 +248,22 @@ const removeRole =async (id:number) => {
     />
   </el-card>
 
-  <el-dialog v-model="dialogVisible" :title="roleParams.id?'更新职位':'添加职位'">
+  <el-dialog
+    v-model="dialogVisible"
+    :title="roleParams.id ? '更新职位' : '添加职位'"
+  >
     <el-form :model="roleParams" :rules="rules" ref="form">
       <el-form-item label="职位名称" prop="roleName">
-        <el-input placeholder="请你输入职位名称" v-model="roleParams.roleName"></el-input>
+        <el-input
+          placeholder="请你输入职位名称"
+          v-model="roleParams.roleName"
+        ></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button type="primary" size="default" @click="dialogVisible=false">取消</el-button>
+      <el-button type="primary" size="default" @click="dialogVisible = false">
+        取消
+      </el-button>
       <el-button type="primary" size="default" @click="save">确定</el-button>
     </template>
   </el-dialog>
@@ -231,18 +274,18 @@ const removeRole =async (id:number) => {
     </template>
     <template #default>
       <el-tree
-          :data="menuArr"
-          show-checkbox
-          node-key="id"
-          default-expand-all
-          :default-checked-keys="selectArr"
-          :props="defaultProps"
-          ref="tree"
+        :data="menuArr"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :default-checked-keys="selectArr"
+        :props="defaultProps"
+        ref="tree"
       />
     </template>
     <template #footer>
       <div style="flex: auto">
-        <el-button @click="drawer=false">取消</el-button>
+        <el-button @click="drawer = false">取消</el-button>
         <el-button type="primary" @click="handler">确定</el-button>
       </div>
     </template>
