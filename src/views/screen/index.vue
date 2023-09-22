@@ -3,6 +3,8 @@ import Top from './components/top/index.vue'
 import Tourist from './components/tourist/index.vue'
 import Sex from './components/sex/index.vue'
 import Age from './components/age/index.vue'
+import Map from './components/map/index.vue'
+import Line from './components/line/index.vue'
 import { onMounted, ref } from 'vue'
 let screen = ref()
 
@@ -42,7 +44,10 @@ window.onresize = () => {
           <Sex class="sex" />
           <Age class="age" />
         </div>
-        <div class="center">中间</div>
+        <div class="center">
+          <Map class="map" />
+          <Line class="line" />
+        </div>
         <div class="right">右边</div>
       </div>
     </div>
@@ -73,6 +78,15 @@ window.onresize = () => {
       }
       .center {
         flex: 2;
+        display: flex;
+        flex-direction: column;
+        .map {
+          flex: 4;
+        }
+        .line {
+          flex: 1;
+          background: skyblue;
+        }
       }
       .left {
         flex: 1;
@@ -80,16 +94,16 @@ window.onresize = () => {
         flex-direction: column;
         height: 1040px;
         .tourist {
-          flex: 1.2;
+          flex: 1;
           //background-color: hotpink;
         }
         .sex {
           flex: 1;
-          background-color: skyblue;
+          //background-color: skyblue;
         }
         .age {
           flex: 1;
-          background-color: coral;
+          //background-color: coral;
         }
       }
     }
