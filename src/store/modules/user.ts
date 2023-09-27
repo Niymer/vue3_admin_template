@@ -2,13 +2,26 @@ import { defineStore } from 'pinia'
 import { reqLogin, reqUserInfo, reqLogout } from '@/api/user'
 import type { UserState } from '@/store/modules/types/type.ts'
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token.ts'
-import { constantRoute } from '@/router/routes.ts'
+import { constantRoute, asyncRoute, anyRoute } from '@/router/routes.ts'
 import type {
   loginFormData,
   loginResponseData,
   userInfoResponseData,
-} from '@/api/user/type.ts'
+} from '@/api/user/type'
+import router from '@/router'
+//@ts-ignore
+import cloneDeep from 'lodash/cloneDeep'
 
+function filterAsyncRoute(asyncRoute: any, routes: any) {
+  return asyncRoute.filter((item: any) => {
+    if (routes.includes(item.name)) {
+      if (item.children && item.children.length > 0) {
+        item.children = filterAsyncRoute(item.children, routes)
+      }
+      return true
+    }
+  })
+}
 let useUserStore = defineStore('User', {
   //小仓库：存储数据
   state: (): UserState => {
@@ -36,9 +49,18 @@ let useUserStore = defineStore('User', {
     },
     async userInfo() {
       let result: userInfoResponseData = await reqUserInfo()
+      console.log(result.data.routes)
       if (result.code === 200) {
         this.username = result.data.name
         this.avatar = result.data.avatar
+        let userAsyncRoute = filterAsyncRoute(
+          cloneDeep(asyncRoute),
+          result.data.routes,
+        )
+        this.menuRoutes = [...constantRoute, ...userAsyncRoute, ...anyRoute]
+        ;[...userAsyncRoute, ...anyRoute].forEach((route: any) => {
+          router.addRoute(route)
+        })
         return 'ok'
       } else {
         return Promise.reject(new Error(result.message))

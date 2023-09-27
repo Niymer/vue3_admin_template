@@ -1,4 +1,4 @@
-export interface oginFormData {
+export interface LoginFormData {
   username: string
   password: string
 }
