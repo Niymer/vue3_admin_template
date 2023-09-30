@@ -32,7 +32,7 @@ defineProps(['scene'])
           @change="handler"
         >
           <el-option
-            v-for="(c1, index) of categoryStore.c1Arr"
+            v-for="(c1, _) of categoryStore.c1Arr"
             :key="c1.id"
             :label="c1.name"
             :value="c1.id"
@@ -46,7 +46,7 @@ defineProps(['scene'])
           @change="handler1"
         >
           <el-option
-            v-for="(c2, index) of categoryStore.c2Arr"
+            v-for="(c2, _) of categoryStore.c2Arr"
             :key="c2.id"
             :label="c2.name"
             :value="c2.id"
@@ -59,7 +59,7 @@ defineProps(['scene'])
           :disabled="scene == 0 ? false : true"
         >
           <el-option
-            v-for="(c3, index) of categoryStore.c3Arr"
+            v-for="(c3, _) of categoryStore.c3Arr"
             :key="c3.id"
             :label="c3.name"
             :value="c3.id"

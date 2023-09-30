@@ -13,6 +13,7 @@ import router from '@/router'
 import pinia from '@/store'
 import './permisstion.ts'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import { isHasButton } from '@/directive/has.ts'
 
 //获取应用实例对象
 const app = createApp(App)
@@ -24,3 +25,4 @@ app.use(gloalComponent)
 app.use(router)
 app.use(pinia)
 app.mount('#app')
+isHasButton(app)

@@ -66,7 +66,7 @@ const addSku = (row: SpuData) => {
   sku.value.initSkuData(categoryStore.c1Id, categoryStore.c2Id, row)
 }
 const findSku = async (row: SpuData) => {
-  let result = await reqSkuList(row.id)
+  let result = await reqSkuList(row.id as number)
   console.log(result)
   if (result.code == 200) {
     skuArr.value = result.data
@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column label="SPU操作">
-            <template #="{ row, $index }">
+            <template #="{ row }">
               <el-button
                 type="primary"
                 size="small"
@@ -181,7 +181,7 @@ onBeforeUnmount(() => {
           <el-table-column label="SKU名字" prop="skuName"></el-table-column>
           <el-table-column label="SKU重量" prop="weight"></el-table-column>
           <el-table-column label="SKU图片">
-            <template #="{ row, $index }">
+            <template #="{ row }">
               <img
                 :src="row.skuDefaultImg"
                 style="width: 100px; height: 100px"

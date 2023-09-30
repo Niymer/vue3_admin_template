@@ -92,7 +92,7 @@ const removeSku = async (id: number) => {
         prop="skuDesc"
       ></el-table-column>
       <el-table-column label="图片" width="160px">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <img :src="row.skuDefaultImg" style="width: 150px; height: 150px" />
         </template>
       </el-table-column>
@@ -107,7 +107,7 @@ const removeSku = async (id: number) => {
         prop="price"
       ></el-table-column>
       <el-table-column label="操作" width="260px" fixed="right">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <el-button
             :type="row.isSale == 1 ? 'success' : 'info'"
             size="small"
@@ -171,7 +171,7 @@ const removeSku = async (id: number) => {
           <el-col :span="18">
             <el-tag
               style="margin: 0 5px"
-              v-for="(item, index) of skuInfo.skuAttrValueList"
+              v-for="(item, _) of skuInfo.skuAttrValueList"
               :key="item.id"
             >
               {{ item.valueName }}
@@ -183,7 +183,7 @@ const removeSku = async (id: number) => {
           <el-col :span="18">
             <el-tag
               style="margin: 0 5px"
-              v-for="(item, index) of skuInfo.skuSaleAttrValueList"
+              v-for="(item, _) of skuInfo.skuSaleAttrValueList"
               :key="item.id"
             >
               {{ item.saleAttrValueName }}

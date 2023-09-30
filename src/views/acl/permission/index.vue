@@ -85,7 +85,7 @@ const removeMenu = async (id: number) => {
       align="center"
     ></el-table-column>
     <el-table-column label="操作" align="center">
-      <template #="{ row, $index }">
+      <template #="{ row }">
         <el-button
           type="primary"
           size="small"

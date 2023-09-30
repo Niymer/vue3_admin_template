@@ -8,7 +8,7 @@ import setting from '@/setting.ts'
 let userStore = useUserStore(pinia)
 nprogress.configure({ showSpinner: false })
 //全局前置路由守卫
-router.beforeEach(async (to: any, from: any, next: any) => {
+router.beforeEach(async (to: any, _: any, next: any) => {
   document.title = `${setting.title}-${to.meta.title}`
   nprogress.start()
   let token = userStore.token
@@ -39,7 +39,7 @@ router.beforeEach(async (to: any, from: any, next: any) => {
 })
 
 //全局后置路由守卫
-router.afterEach((to: any, from: any) => {
+router.afterEach((_: any, __: any) => {
   nprogress.done()
 })
 

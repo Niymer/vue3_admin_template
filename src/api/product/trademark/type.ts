@@ -5,17 +5,17 @@ export interface ResponseData {
 }
 
 //已有的品牌的ts数据类型
-export interface TradeMark {
+export interface Trademark {
   id?: number
   tmName: string
   logoUrl: string
 }
 
 //包含全部品牌数据的ts类型
-export type Records = TradeMark[]
+export type Records = Trademark[]
 
 //获取的已有全部品牌的数据ts类型
-export interface TradeMarkResponseData extends ResponseData {
+export interface TrademarkResponseData extends ResponseData {
   data: {
     records: Records
     total: number

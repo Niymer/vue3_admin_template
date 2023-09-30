@@ -4,7 +4,6 @@ import {
   AttrResponseData,
   Attr,
 } from '@/api/product/attr/type.ts'
-import category from '@/store/modules/category.ts'
 
 enum API {
   C1_URL = '/admin/product/getCategory1',

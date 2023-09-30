@@ -127,7 +127,7 @@ const toLook = (row: SaleAttr) => {
     return
   }
   //判断属性值是否在数组当中存在
-  let repeat = row.spuSaleAttrValueList.find((item) => {
+  let repeat = row.spuSaleAttrValueList?.find((item) => {
     return item.saleAttrValueName == saleAttrValue
   })
 
@@ -139,7 +139,7 @@ const toLook = (row: SaleAttr) => {
     return
   }
   //追加新的属性值对象
-  row.spuSaleAttrValueList.push(newSaleAttrValue)
+  row.spuSaleAttrValueList?.push(newSaleAttrValue)
   //切换为查看模式
   row.flag = false
 }
@@ -200,7 +200,7 @@ defineExpose({ initHasSpuData, initAddSpu })
     <el-form-item label="SPU品牌">
       <el-select v-model="SpuParams.tmId">
         <el-option
-          v-for="(item, index) of AlltradeMark"
+          v-for="(item, _) of AlltradeMark"
           :key="item.id"
           :label="item.tmName"
           :value="item.id"
@@ -245,7 +245,7 @@ defineExpose({ initHasSpuData, initAddSpu })
         v-model="saleAttrIdAndValueName"
       >
         <el-option
-          v-for="(item, index) of unSelectSaleAttr"
+          v-for="(item, _) of unSelectSaleAttr"
           :key="item.id"
           :label="item.name"
           :value="`${item.id}:${item.name}`"
@@ -274,7 +274,7 @@ defineExpose({ initHasSpuData, initAddSpu })
           prop="saleAttrName"
         ></el-table-column>
         <el-table-column label="属性值">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <el-tag
               v-for="(item, index) of row.spuSaleAttrValueList"
               :key="row.id"
@@ -303,7 +303,7 @@ defineExpose({ initHasSpuData, initAddSpu })
           </template>
         </el-table-column>
         <el-table-column label="操作" width="100px">
-          <template #="{ row, $index }">
+          <template #="{ $index }">
             <el-button
               type="danger"
               size="small"

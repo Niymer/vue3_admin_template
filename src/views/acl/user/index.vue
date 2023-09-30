@@ -99,21 +99,21 @@ const save = async () => {
 const cancel = () => {
   drawer.value = false
 }
-const validatorUsername = (rule: any, value: any, callBack: any) => {
+const validatorUsername = (_: any, value: any, callBack: any) => {
   if (value.trim().length >= 5) {
     callBack()
   } else {
     callBack(new Error('用户名字至少5位'))
   }
 }
-const validatorName = (rule: any, value: any, callBack: any) => {
+const validatorName = (_: any, value: any, callBack: any) => {
   if (value.trim().length >= 5) {
     callBack()
   } else {
     callBack(new Error('昵称字至少5位'))
   }
 }
-const validatorPassword = (rule: any, value: any, callBack: any) => {
+const validatorPassword = (_: any, value: any, callBack: any) => {
   if (value.trim().length >= 6) {
     callBack()
   } else {
@@ -262,7 +262,7 @@ const reset = () => {
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" width="280px" align="center">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <el-button
             type="primary"
             size="small"

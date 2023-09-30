@@ -22,7 +22,7 @@ function filterAsyncRoute(asyncRoute: any, routes: any) {
     }
   })
 }
-let useUserStore = defineStore('User', {
+const useUserStore = defineStore('User', {
   //小仓库：存储数据
   state: (): UserState => {
     return {
@@ -30,6 +30,7 @@ let useUserStore = defineStore('User', {
       menuRoutes: constantRoute, //仓库存储生成菜单需要数组（路由）
       username: '',
       avatar: '',
+      buttons: [],
     }
   },
   actions: {
@@ -49,10 +50,11 @@ let useUserStore = defineStore('User', {
     },
     async userInfo() {
       let result: userInfoResponseData = await reqUserInfo()
-      console.log(result.data.routes)
+      // console.log(result.data.routes)
       if (result.code === 200) {
         this.username = result.data.name
         this.avatar = result.data.avatar
+        this.buttons = result.data.buttons
         let userAsyncRoute = filterAsyncRoute(
           cloneDeep(asyncRoute),
           result.data.routes,

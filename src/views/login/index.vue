@@ -76,14 +76,14 @@ const login = async () => {
     })
   }
 }
-const validatorUserName = (rule: any, value: any, callback: any) => {
+const validatorUserName = (_: any, value: any, callback: any) => {
   if (value.length >= 5) {
     callback()
   } else {
     callback(new Error('账号长度至少5位'))
   }
 }
-const validatorPassword = (rule: any, value: any, callback: any) => {
+const validatorPassword = (_: any, value: any, callback: any) => {
   if (value.length >= 6) {
     callback()
   } else {

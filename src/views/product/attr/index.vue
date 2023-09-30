@@ -156,10 +156,10 @@ onBeforeUnmount(() => {
             align="center"
             width="840px"
           >
-            <template #="{ row, $index }">
+            <template #="{ row }">
               <el-tag
                 style="margin: 5px"
-                v-for="(item, index) of row.attrValueList"
+                v-for="(item, _) of row.attrValueList"
                 :key="item.id"
               >
                 {{ item.valueName }}
@@ -172,7 +172,7 @@ onBeforeUnmount(() => {
             align="center"
             width="120px"
           >
-            <template #="{ row, $index }">
+            <template #="{ row }">
               <el-button
                 type="warning"
                 size="small"
@@ -239,7 +239,7 @@ onBeforeUnmount(() => {
             </template>
           </el-table-column>
           <el-table-column label="属性值操作">
-            <template #="{ row, $index }">
+            <template #="{ $index }">
               <el-button
                 type="danger"
                 size="small"

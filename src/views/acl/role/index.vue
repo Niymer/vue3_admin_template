@@ -74,7 +74,7 @@ const updateRole = (row: RoleData) => {
     form.value.clearValidate('roleName')
   })
 }
-const validatorRoleName = (rule: any, value: any, callBack: any) => {
+const validatorRoleName = (_: any, value: any, callBack: any) => {
   if (value.trim().length >= 2) {
     callBack()
   } else {
@@ -204,7 +204,7 @@ const removeRole = async (id: number) => {
         prop="updateTime"
       ></el-table-column>
       <el-table-column align="center" label="操作">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <el-button
             type="primary"
             size="small"

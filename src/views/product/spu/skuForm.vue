@@ -123,13 +123,13 @@ defineExpose({ initSkuData })
     <el-form-item label="平台属性">
       <el-form :inline="true">
         <el-form-item
-          v-for="(item, index) of attrArr"
+          v-for="(item, _) of attrArr"
           :key="item.id"
           :label="item.attrName"
         >
           <el-select v-model="item.attrIdAndValueId">
             <el-option
-              v-for="(attrValue, index) of item.attrValueList"
+              v-for="(attrValue, _) of item.attrValueList"
               :key="attrValue.id"
               :label="attrValue.valueName"
               :value="`${item.id}:${attrValue.id}`"
@@ -141,13 +141,13 @@ defineExpose({ initSkuData })
     <el-form-item label="销售属性">
       <el-form :inline="true">
         <el-form-item
-          v-for="(item, index) of saleArr"
+          v-for="(item, _) of saleArr"
           :key="item.id"
           :label="item.saleAttrName"
         >
           <el-select v-model="item.saleIdAndValueId">
             <el-option
-              v-for="(saleAttrValue, index) of item.spuSaleAttrValueList"
+              v-for="(saleAttrValue, _) of item.spuSaleAttrValueList"
               :key="saleAttrValue.id"
               :label="saleAttrValue.saleAttrValueName"
               :value="`${item.id}:${saleAttrValue.id}`"
@@ -164,13 +164,13 @@ defineExpose({ initSkuData })
           align="center"
         ></el-table-column>
         <el-table-column label="图片">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <img :src="row.imgUrl" style="width: 100px; height: 100px" />
           </template>
         </el-table-column>
         <el-table-column label="名称" prop="imgName"></el-table-column>
         <el-table-column label="操作">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <el-button type="warning" size="small" @click="handler(row)">
               设置默认
             </el-button>

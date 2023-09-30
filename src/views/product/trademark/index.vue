@@ -110,15 +110,12 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   }
 }
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile,
-) => {
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response, _) => {
   trademarkParams.logoUrl = response.data
   formRef.value.clearValidate('logoUrl')
 }
 
-const validatorTmName = (rule: any, value: any, callBack: any) => {
+const validatorTmName = (_: any, value: any, callBack: any) => {
   if (value.trim().length >= 2) {
     callBack()
   } else {
@@ -126,7 +123,7 @@ const validatorTmName = (rule: any, value: any, callBack: any) => {
   }
 }
 
-const validatorLogoUrl = (rule: any, value: any, callBack: any) => {
+const validatorLogoUrl = (_: any, value: any, callBack: any) => {
   if (value) {
     callBack()
   } else {
@@ -183,12 +180,12 @@ const removeTrademark = async (id: number) => {
         <!-- table-column:默认展示数据用div -->
         <el-table-column label="品牌名称" prop="tmName"></el-table-column>
         <el-table-column label="品牌LOGO">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <img :src="row.logoUrl" style="width: 100px; height: 100px" />
           </template>
         </el-table-column>
         <el-table-column label="品牌操作">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <el-button
               type="primary"
               size="small"

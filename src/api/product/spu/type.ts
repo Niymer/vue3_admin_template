@@ -52,8 +52,8 @@ export interface SaleAttrValue {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number | string
-  saleAttrvalueName: string
+  baseSaleAttrId?: number | string
+  saleAttrValueName?: string
   saleAttrName?: string
   isChecked?: null
 }
@@ -63,9 +63,9 @@ export interface SaleAttr {
   createTime?: null
   updateTime?: null
   spuId?: number
-  baseSaleAttrId: number | string
-  saleAttrName: string
-  spuSaleAttrValueList: spuSaleAttrValueList
+  baseSaleAttrId?: number | string
+  saleAttrName?: string
+  spuSaleAttrValueList?: spuSaleAttrValueList
   flag?: boolean
   saleAttrValue?: string
 }
@@ -86,8 +86,8 @@ export interface Attr {
   valueId: number | string
 }
 export interface SaleAttr {
-  saleAttrId: string | number
-  saleAttrValueId: string | number
+  saleAttrId?: string | number
+  saleAttrValueId?: string | number
 }
 export interface SkuData {
   category3Id: string | number
